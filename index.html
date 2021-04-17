@@ -1,0 +1,359 @@
+<html>
+    <head>
+        <title>BS Plus Chat Integrations Manager</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <nav>
+            <button id="download">Big Download Button, definitly malicious ads, LicensedCrime &copy;</button>
+        </nav>
+
+        <br>
+        <br>
+        <br>
+
+        <div class="container">
+            <div class="col-md-6">
+                <section id="event_create">
+                    <h3>Create Event</h3>
+
+                    <label for="event_type_select">Type:</label>
+                    <select id="event_type_select">
+                        <option value="1">ChatBits</option>
+                        <option value="2">ChatCommand</option>
+                        <option value="3">ChatFollow</option>
+                        <option value="4">ChatPointsReward</option>
+                        <option value="5">ChatSubscription</option>
+                        <option value="6">Dummy</option>
+                        <option value="7">LevelEnded</option>
+                        <option value="8">LevelStarted</option>
+                        <option value="9">VoiceAttackCommand</option>
+                    </select>
+                    
+                    <hr>
+                    <form>
+                        <div class="form-group">
+                            <label for="edit_event">Template</label>
+                            <input type="text" class="form-control" id="edit_event" value="">
+                        </div>
+                    </form>
+                    <hr>
+        
+                    <button id="create_event_btn">Create</button>
+                    <button id="cancel_create_event_btn">Cancel</button>
+                </section>
+
+                <hr>
+                <hr>
+        
+                <section id="event_manager">
+                    <h3>Event List</h3>
+
+                    <label for="event_filter">Filter:</label>
+                    <select id="event_filter">
+                        <option value="0" selected>All</option>
+        
+                        <option value="1">ChatBits</option>
+                        <option value="2">ChatCommand</option>
+                        <option value="3">ChatFollow</option>
+                        <option value="4">ChatPointsReward</option>
+                        <option value="5">ChatSubscription</option>
+                        <option value="6">Dummy</option>
+                        <option value="7">LevelEnded</option>
+                        <option value="8">LevelStarted</option>
+                        <option value="9">VoiceAttackCommand</option>
+                    </select>
+        
+                    <hr>
+        
+                    <table>
+                        <thead id="event_list_head">
+                            <tr>
+                                <th width="200">Type</th>
+                                <th>Template</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="event_list_table">
+                            <tr>
+                                <td>{type}</td>
+                                <td>{template}</td>
+                                <td><button>Edit</button></td>
+                                <td><button>Delete</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+        
+                    <hr>
+        
+                    <div>
+                        <button id="new_btn">New</button>
+                        <button id="rename_btn">Rename</button>
+                        <button id="toggle_btn">Toggle</button>
+                        <button id="delete_btn">Delete</button>
+                        <button id="export_btn">Export</button>
+                        <button id="import_btn">Import</button>
+                        <button id="clone_btn">Clone</button>
+                        <button id="templates_btn" disabled>Templates</button>
+                    </div>
+                </section>
+            </div>
+
+            <!--  -->
+            <div class="col-md-6">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#trigger">Trigger</a></li>
+                    <li><a data-toggle="tab" href="#actions">Actions</a></li>
+                    <li><a data-toggle="tab" href="#conditions">Conditions</a></li>
+                </ul>
+                  
+                <div class="tab-content">
+                    <br>
+                    <div>
+                        <button id="save_settings_btn">Save Settings</button>
+                    </div>
+
+                    <section id="trigger" class="tab-pane fade in active">
+                        <h3>Trigger</h3>
+                        <article id="trigger_article">
+
+                        </article>
+                    </section>
+
+                    <section id="actions" class="tab-pane fade">
+                        <h3>Actions</h3>
+                        <hr>
+                        <table>
+                            <thead id="actions_list_head">
+                                <tr>
+                                    <th width="300">Type</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="action_list_table">
+                                <tr>
+                                    <td>{type}</td>
+                                    <td><button id="{action_edit_id}">Edit</button></td>
+                                    <td><button id="{action_clone_id}">Clone</button></td>
+                                    <td><button id="{action_delete_id}">Delete</button></td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                        <hr>
+
+                        <label for="action_type_select">Type:</label>
+                        <select id="action_type_select">
+                            <option value="1">Chat_SendMessage</option>
+                            <option value="2">Chat_ToggleEmoteOnly</option>
+                            <option value="3">EmoteRain_CustomRain</option>
+                            <option value="4">EmoteRain_EmoteBombRain</option>
+                            <option value="5">EmoteRain_SubRain</option>
+                            <option value="6">Event_ExecuteDummy</option>
+                            <option value="7">Event_Toggle</option>
+                            <option value="8">GamePlay_Pause</option>
+                            <option value="9">GamePlay_Quit</option>
+                            <option value="10">GamePlay_ChangeDebris</option>
+                            <option value="11">GamePlay_ChangeLightIntensity</option>
+                            <option value="12">GamePlay_ChangeMusicVolume</option>
+                            <option value="13">GamePlay_Restart</option>
+                            <option value="14">GamePlay_SpawnSquatWalls</option>
+                            <option value="15">GamePlay_ToggleHUD</option>
+                            <option value="16">Misc_Delay</option>
+                            <option value="17">Misc_PlaySound</option>
+                            <option value="18">Twitch_AddMarker</option>
+                            <option value="19">Twitch_CreateClip</option>
+                        </select>
+                        <div>
+                            <button id="create_action_btn">Add</button>
+                        </div>
+                        <hr>
+                        <article id="action_article">
+
+                        </article>
+                    </section>
+
+                    <section id="conditions" class="tab-pane fade">
+                        <h3>Conditions</h3>
+                        <hr>
+                        <table>
+                            <thead id="conditions_list_head">
+                                <tr>
+                                    <th width="300">Type</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="condition_list_table">
+                                <tr>
+                                    <td>{type}</td>
+                                    <td><button id="{condition_edit_id}">Edit</button></td>
+                                    <td><button id="{condition_clone_id}">Clone</button></td>
+                                    <td><button id="{condition_delete_id}">Delete</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <hr>
+                        <label for="condition_type_select">Type:</label>
+                        <select id="condition_type_select">
+                            <option value="1">Bits_Amount</option>
+                            <option value="2">ChatRequest_QueueDuration</option>
+                            <option value="3">ChatRequest_QueueSize</option>
+                            <option value="4">ChatRequest_QueueStatus</option>
+                            <option value="5">GamePlay_InMenu</option>
+                            <option value="6">GamePlay_LevelEndType</option>
+                            <option value="7">GamePlay_PlayingMap</option>
+                            <option value="8">Misc_Cooldown</option>
+                            <option value="9">Subscription_IsGift</option>
+                            <option value="10">Subscription_PlanType</option>
+                            <option value="11">Subscription_PurchasedMonthCount</option>
+                            <option value="12">User_Permissions</option>
+                        </select>
+                        <div>
+                            <button id="create_condition_btn">Add</button>
+                        </div>
+                        <hr>
+                        <article id="condition_article">
+
+                        </article>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+
+        <!--  -->
+
+        <script src="js/Loader.js"></script>
+
+        <script>
+            include("SettingsGenerator");
+            include("ViewController");
+        </script>
+
+        <script>
+
+
+            function download(filename, text) {
+                var element = document.createElement('a');
+                element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+                element.setAttribute('download', filename);
+
+                element.style.display = 'none';
+                document.body.appendChild(element);
+
+                element.click();
+
+                document.body.removeChild(element);
+            }
+        </script>
+
+        <script>
+            var new_btn = document.getElementById("new_btn");
+            var rename_btn = document.getElementById("rename_btn");
+            var toggle_btn = document.getElementById("toggle_btn");
+            var delete_btn = document.getElementById("delete_btn");
+            var export_btn = document.getElementById("export_btn");
+            var import_btn = document.getElementById("import_btn");
+            var clone_btn = document.getElementById("clone_btn");
+            var templates_btn = document.getElementById("templates_btn");
+
+            var event_type_select = document.getElementById("event_type_select");
+            var condition_type_select = document.getElementById("condition_type_select");
+
+            var create_event_btn = document.getElementById("create_event_btn");
+            var cancel_create_event_btn = document.getElementById("cancel_create_event_btn");
+
+            var create_condition_btn = document.getElementById("create_condition_btn");
+            var create_action_btn = document.getElementById("create_action_btn");
+
+            var save_settings_btn = document.getElementById("save_settings_btn");
+
+            var download_btn = document.getElementById("download");
+        </script>
+
+        <script>
+            var event_create = document.getElementById("event_create");
+            var event_manager = document.getElementById("event_manager");
+
+            var event_list_head = document.getElementById("event_list_head");
+            var event_list_table = document.getElementById("event_list_table");
+
+            var trigger_article = document.getElementById("trigger_article");
+            var condition_article = document.getElementById("condition_article");
+            var action_article = document.getElementById("action_article");
+
+            var action_list_table = document.getElementById("action_list_table");
+            var condition_list_table = document.getElementById("condition_list_table");
+
+            var list_template = event_list_table.innerHTML;
+            var action_list_template = action_list_table.innerHTML;
+            var condition_list_template = condition_list_table.innerHTML;
+
+            // ----
+
+            var json = {};
+            // ----
+
+            onload(function() {
+                var view = new ViewController();
+
+                // -----------------------------------
+                //removeChildren(trigger_article);
+                // -----------------------------------
+
+                var gen = new SettingsGenerator();
+
+                json = gen.getJSON();
+
+                create_event_btn.onclick = function() {
+                    var index = gen.addEvent(parseInt(event_type_select.value));
+                    view.showEvents(json);
+
+                    view.showAction(index, -1);
+                    view.showCondition(index, -1);
+
+                    view.setCurrentEvent(index);
+                };
+
+                download_btn.onclick = function() {
+                    download("ChatIntegrations.json", gen.getJSONString());
+                };
+
+                create_condition_btn.onclick = function() {
+                    try {
+                        var condition = parseInt(condition_type_select.value);
+    
+                        var index = gen.addCondition(view.getCurrentEvent(), condition);
+                        view.showCondition(view.getCurrentEvent(), index);
+                    } catch(e) {
+                        console.log(e);
+                        alert(e);
+                    }
+                };
+
+                create_action_btn.onclick = function() {
+                    try {
+                        var action = parseInt(action_type_select.value);
+    
+                        var index = gen.addAction(view.getCurrentEvent(), action);
+                        view.showAction(view.getCurrentEvent(), index);
+                    } catch(e) {
+                        console.log(e);
+                        alert(e);
+                    }
+                };
+
+            });
+        </script>
+    </body>
+</html>
