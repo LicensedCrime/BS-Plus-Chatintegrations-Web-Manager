@@ -6,6 +6,12 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+        <style>
+            hr {
+                border-top: 3px solid #ccc;
+            }
+        </style>
     </head>
     <body>
         <nav>
@@ -114,10 +120,6 @@
                   
                 <div class="tab-content">
                     <br>
-                    <div>
-                        <button id="save_settings_btn">Save Settings</button>
-                    </div>
-
                     <section id="trigger" class="tab-pane fade in active">
                         <h3>Trigger</h3>
                         <article id="trigger_article">
@@ -175,6 +177,10 @@
                             <button id="create_action_btn">Add</button>
                         </div>
                         <hr>
+                        <div>
+                            <button id="save_settings_btn">Save Settings</button>
+                        </div>
+                        <br>
                         <article id="action_article">
 
                         </article>
@@ -288,10 +294,6 @@
             var event_list_head = document.getElementById("event_list_head");
             var event_list_table = document.getElementById("event_list_table");
 
-            var trigger_article = document.getElementById("trigger_article");
-            var condition_article = document.getElementById("condition_article");
-            var action_article = document.getElementById("action_article");
-
             var action_list_table = document.getElementById("action_list_table");
             var condition_list_table = document.getElementById("condition_list_table");
 
@@ -352,7 +354,6 @@
                         alert(e);
                     }
                 };
-
             });
         </script>
     </body>

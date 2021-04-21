@@ -10,10 +10,79 @@ function ViewController() {
     var action_list_template = action_list_table.innerHTML;
     var condition_list_template = condition_list_table.innerHTML;
 
+    var save_settings_btn = document.getElementById("save_settings_btn");
+
+    var trigger_tab = document.querySelector("#trigger.tab-pane");
+    var actions_tab = document.querySelector("#actions.tab-pane");
+    var conditions_tab = document.querySelector("#conditions.tab-pane");
+
+    var TAB = {
+        TRIGGER: 1,
+        ACTIONS: 2,
+        CONDITIONS: 3
+    };
+
     var current_event = -1;
     var current_action = -1;
     var current_condition = -1;
+
+    var self = this;
     
+    // ---
+    
+    this.onSaveButton = function() {
+        if(trigger_tab.getAttribute("class").indexOf("active") >= 0) {
+            self.saveTab.bind(self, trigger_article, TAB.TRIGGER)();
+            return;
+        }
+
+        if(actions_tab.getAttribute("class").indexOf("active") >= 0) {
+            self.saveTab.bind(self, action_article, TAB.ACTIONS)();
+            return;
+        }
+
+        if(conditions_tab.getAttribute("class").indexOf("active") >= 0) {
+            self.saveTab.bind(self, condition_article, TAB.CONDITIONS)();
+            return;
+        }
+    };
+
+    this.saveTab = function(node, tab_type) {
+        var struct;
+
+        switch(tab_type) {
+            case TAB.TRIGGER:
+                // ~~~
+                break;
+            case TAB.ACTIONS:
+                struct = json.Events[current_event].Actions[current_action];
+                break;
+            case TAB.CONDITIONS:
+                struct = json.Events[current_event].Conditions[current_condition];
+                break;
+        }
+
+        var input_collection = node.querySelectorAll('input');
+        var input_node, input_value;
+        for(var i = 0; i < input_collection.length; i++) {
+            input_node = input_collection[i];
+            input_value = this.getInputValue(input_node);
+
+            struct[input_node.id.match(/edit_[^_]+_(.+)/)[1]] = input_value;
+        }
+    };
+
+    this.getInputValue = function(node) {
+        switch(node.getAttribute("type")) {
+            case "checkbox":
+                return node.checked;
+        }
+
+        return node.value;
+    };
+
+    // ---
+
     this.onEventEdit = function(id) { 
         current_event = id;
         
@@ -51,19 +120,40 @@ function ViewController() {
         }
     };
 
-    this.getInputMarkup = function(attribute, value) {
+    this.getInputMarkup = function(type, attribute, value) {
+        var add_attribute = this.getAdditionalAttributes(attribute);
+
         switch(attribute) {
             case "Enabled":
             case "SendChatMessage":
-                return '<br><input type="checkbox" data-toggle="toggle" id="edit_action_' + attribute + '" ' + (value ? "checked" : "") + '>';
+            case "AddTTSPefix":
+            case "Continue":
+            case "Debris":
+            case "PreventNextActionFailure":
+            case "IsGreaterThan":
+            case "Solo":
+            case "Multi":
+            case "Replay":
+            case "PerUser":
+            case "NotifyUser":
+                return '<br><input type="checkbox" data-toggle="toggle" id="edit_' + type + '_' + attribute + '" ' + (value ? "checked" : "") + ' ' + add_attribute + '>';
             case "ValueType":
             case "UserValue":
             case "Min":
             case "Max":
-                return '<input type="number" class="form-control" id="edit_action_' + attribute + '" value="' + value + '">';
+                return '<input type="number" class="form-control" id="edit_' + type + '_' + attribute + '" value="' + value + '" ' + add_attribute + '>';
         }
 
-        return '<input type="text" class="form-control" id="edit_action_' + attribute + '" value="' + value + '">'
+        return '<input type="text" class="form-control" id="edit_' + type + '_' + attribute + '" value="' + value + '" ' + add_attribute + '>'
+    };
+
+    this.getAdditionalAttributes = function(attribute) {
+        switch(attribute) {
+            case "Type":
+                return "disabled";
+        }
+
+        return "";
     };
 
     this.showAction = function(event_index, action_index) {
@@ -74,13 +164,14 @@ function ViewController() {
             return;
         }
 
+        current_action = action_index;
         var action_json = json.Events[event_index].Actions[action_index];
 
         var action_html = '<form>';
         for(var attr in action_json) {
             action_html += '<div class="form-group">';
             action_html += '<label for="edit_action_' + attr + '">' + attr + '</label>';
-            action_html += this.getInputMarkup(attr, action_json[attr]);
+            action_html += this.getInputMarkup("action", attr, action_json[attr]);
             action_html += '</div>';
         }
         action_html += '</form>';
@@ -120,13 +211,14 @@ function ViewController() {
             return;
         }
 
+        current_condition = condition_index;
         var condition_json = json.Events[event_index].Conditions[condition_index];
 
         var condition_html = '<form>';
         for(var attr in condition_json) {
             condition_html += '<div class="form-group">';
             condition_html += '<label for="edit_condition_' + attr + '">' + attr + '</label>';
-            condition_html += this.getInputMarkup(attr, condition_json[attr]);
+            condition_html += this.getInputMarkup("condition", attr, condition_json[attr]);
             condition_html += '</div>';
         }
         condition_html += '</form>';
@@ -159,4 +251,8 @@ function ViewController() {
             event_list_table.insertAdjacentHTML("beforeend", html);
         }
     };
+
+    // --
+
+    save_settings_btn.onclick = this.onSaveButton;
 }
