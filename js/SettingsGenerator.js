@@ -29,7 +29,8 @@ function SettingsGenerator() {
     };
 
     this.getJSONString = function() {
-        return JSON.stringify(this.getJSON());
+        var num_spaces = 4;
+        return JSON.stringify(this.getJSON(), null, num_spaces);
     };
 
     this.getJSON = function() {
