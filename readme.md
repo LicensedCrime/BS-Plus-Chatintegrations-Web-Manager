@@ -12,6 +12,4 @@
 + probably some refactoring of the index.html ... but who cares ...
 + generate select options from enums
 + globals ....
-+ styling the UI probs
 + add an option to work with existing settings
-+ voiceattack is still not in here
