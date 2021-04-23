@@ -3,6 +3,7 @@ function ViewController() {
     var condition_article = document.getElementById("condition_article");
     var action_article = document.getElementById("action_article");
 
+    var event_list_table = document.getElementById("event_list_table");
     var action_list_table = document.getElementById("action_list_table");
     var condition_list_table = document.getElementById("condition_list_table");
 
@@ -94,9 +95,25 @@ function ViewController() {
     this.onConditionEdit = function(id) { this.showCondition(current_event, id); };
 
     
-    this.onEventDelete = function(id) {};
-    this.onActionDelete = function(id) {};
-    this.onConditionDelete = function(id) {};
+    this.onEventDelete = function(id) {
+        this.removeChild(event_list_table, id);
+        json.Events.splice(id, 1);
+
+        this.showCondition(current_event, -1);
+        this.showAction(current_event, -1);
+    };
+    this.onActionDelete = function(id) {
+        this.removeChild(action_list_table, id);
+        json.Events[current_event].Actions.splice(id, 1);
+
+        this.showAction(current_event, -1);
+    };
+    this.onConditionDelete = function(id) {
+        this.removeChild(condition_list_table, id);
+        json.Events[current_event].Conditions.splice(id, 1);
+
+        this.showCondition(current_event, -1);
+    };
     
     this.onEventClone = function(id) {};
     this.onActionClone = function(id) {};
@@ -118,6 +135,10 @@ function ViewController() {
         while(node.firstChild) {
             node.removeChild(node.firstChild);
         }
+    };
+
+    this.removeChild = function(node, index) {
+        node.removeChild(node.children.item(index));
     };
 
     this.getInputMarkup = function(type, attribute, value) {
@@ -237,6 +258,17 @@ function ViewController() {
 
         this.removeChildren(condition_list_table);
         condition_list_table.insertAdjacentHTML("beforeend", condition_list_html);
+
+        this.bindConditions(conditions);
+    };
+
+    this.bindConditions = function(conditions) {
+        var self = this;
+        for(var i = 0; i < conditions.length; i++) {
+            document.getElementById("condition_edit_" + i).onclick = function() { self.onConditionEdit(parseInt(this.id.replace(/([^\d]+)/g, ""))); };
+            document.getElementById("condition_clone_" + i).onclick = function() { self.onConditionClone(parseInt(this.id.replace(/([^\d]+)/g, ""))); };
+            document.getElementById("condition_delete_" + i).onclick = function() { self.onConditionDelete(parseInt(this.id.replace(/([^\d]+)/g, ""))); };
+        }
     };
 
     this.showEvents = function(json) {
@@ -246,9 +278,21 @@ function ViewController() {
         for(var i = 0; i < json.Events.length; i++) {
             html = list_template
                 .replace("{type}", json.Events[i].Type.match(/([\w]+)$/g)[0])
-                .replace("{template}", json.Events[i].Event.Name);
+                .replace("{template}", json.Events[i].Event.Name)
+                .replace("{event_edit_id}", "event_edit_" + i)
+                .replace("{event_delete_id}", "event_delete_" + i);
 
             event_list_table.insertAdjacentHTML("beforeend", html);
+        }
+
+        this.bindEvents(json.Events);
+    };
+
+    this.bindEvents = function(events) {
+        var self = this;
+        for(var i = 0; i < events.length; i++) {
+            document.getElementById("event_edit_" + i).onclick = function() { self.onEventEdit(parseInt(this.id.replace(/([^\d]+)/g, ""))); };
+            document.getElementById("event_delete_" + i).onclick = function() { self.onEventDelete(parseInt(this.id.replace(/([^\d]+)/g, ""))); };
         }
     };
 

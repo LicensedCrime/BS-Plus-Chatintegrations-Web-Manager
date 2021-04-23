@@ -118,8 +118,8 @@
                             <tr>
                                 <td>{type}</td>
                                 <td>{template}</td>
-                                <td><button class="btn btn-default">Edit</button></td>
-                                <td><button class="btn btn-danger">Delete</button></td>
+                                <td><button class="btn btn-primary" id="{event_edit_id}">Edit</button></td>
+                                <td><button class="btn btn-danger" id="{event_delete_id}">Delete</button></td>
                             </tr>
                         </tbody>
                     </table>
@@ -208,10 +208,6 @@
                         <div>
                             <button class="btn btn-success" id="create_action_btn">Add</button>
                         </div>
-                        <hr>
-                        <div>
-                            <button class="btn btn-success" id="save_settings_btn">Save Settings</button>
-                        </div>
                         <br>
                         <article id="action_article">
 
@@ -264,6 +260,11 @@
 
                         </article>
                     </section>
+
+                    <hr>
+                    <div>
+                        <button class="btn btn-success" id="save_settings_btn">Save Settings</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -322,16 +323,6 @@
         <script>
             var event_create = document.getElementById("event_create");
             var event_manager = document.getElementById("event_manager");
-
-            var event_list_head = document.getElementById("event_list_head");
-            var event_list_table = document.getElementById("event_list_table");
-
-            var action_list_table = document.getElementById("action_list_table");
-            var condition_list_table = document.getElementById("condition_list_table");
-
-            var list_template = event_list_table.innerHTML;
-            var action_list_template = action_list_table.innerHTML;
-            var condition_list_template = condition_list_table.innerHTML;
 
             var edit_event = document.getElementById("edit_event");
 
