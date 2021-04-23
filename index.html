@@ -11,11 +11,40 @@
             hr {
                 border-top: 3px solid #ccc;
             }
+
+            body {
+                background-color: rgb(48, 48, 48);
+                color: rgb(241, 241, 241);
+            }
+
+            button, select,
+            input.form-control,
+            .nav-tabs>li.active>a,
+            .nav-tabs>li:hover>a {
+                color:rgb(48, 48, 48);
+            }
+
+            .nav-tabs>li>a {
+                color: #fff;
+            }
+
+            select, input.form-control, .nav-tabs>li.active>a {
+                background-color: #f1f1f1;
+            }
+
+            input[disabled], .form-control[disabled] {
+                background-color: #757575;
+                color: #292929;
+            }
+
+            button {
+                margin-right: 5px;
+            }
         </style>
     </head>
     <body>
         <nav>
-            <button id="download">Big Download Button, definitly malicious ads, LicensedCrime &copy;</button>
+            <button class="btn btn-success" id="download">Big Download Button, definitly malicious ads, LicensedCrime &copy;</button>
         </nav>
 
         <br>
@@ -49,8 +78,8 @@
                     </form>
                     <hr>
         
-                    <button id="create_event_btn">Create</button>
-                    <button id="cancel_create_event_btn">Cancel</button>
+                    <button class="btn btn-success" id="create_event_btn">Create</button>
+                    <button class="btn btn-default" id="cancel_create_event_btn">Cancel</button>
                 </section>
 
                 <hr>
@@ -79,8 +108,8 @@
                     <table>
                         <thead id="event_list_head">
                             <tr>
-                                <th width="200">Type</th>
-                                <th>Template</th>
+                                <th width="180">Type</th>
+                                <th width="200">Template</th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -89,8 +118,8 @@
                             <tr>
                                 <td>{type}</td>
                                 <td>{template}</td>
-                                <td><button>Edit</button></td>
-                                <td><button>Delete</button></td>
+                                <td><button class="btn btn-default">Edit</button></td>
+                                <td><button class="btn btn-danger">Delete</button></td>
                             </tr>
                         </tbody>
                     </table>
@@ -98,14 +127,17 @@
                     <hr>
         
                     <div>
-                        <button id="new_btn">New</button>
-                        <button id="rename_btn">Rename</button>
-                        <button id="toggle_btn">Toggle</button>
-                        <button id="delete_btn">Delete</button>
-                        <button id="export_btn">Export</button>
-                        <button id="import_btn">Import</button>
-                        <button id="clone_btn">Clone</button>
-                        <button id="templates_btn" disabled>Templates</button>
+                        <button class="btn btn-success" id="new_btn">New</button>
+                        <button class="btn btn-default" id="rename_btn">Rename</button>
+                        <button class="btn btn-default" id="clone_btn">Clone</button>
+                        <button class="btn btn-default" id="toggle_btn">Toggle</button>
+                        <button class="btn btn-default" id="delete_btn" class="btn btn-danger">Delete</button>
+                    </div>
+                    <br>
+                    <div>
+                        <button class="btn btn-default" id="export_btn">Export</button>
+                        <button class="btn btn-default" id="import_btn">Import</button>
+                        <button class="btn btn-default" id="templates_btn" disabled>Templates</button>
                     </div>
                 </section>
             </div>
@@ -141,9 +173,9 @@
                             <tbody id="action_list_table">
                                 <tr>
                                     <td>{type}</td>
-                                    <td><button id="{action_edit_id}">Edit</button></td>
-                                    <td><button id="{action_clone_id}">Clone</button></td>
-                                    <td><button id="{action_delete_id}">Delete</button></td>
+                                    <td><button class="btn btn-primary" id="{action_edit_id}">Edit</button></td>
+                                    <td><button class="btn btn-default" id="{action_clone_id}">Clone</button></td>
+                                    <td><button class="btn btn-danger" id="{action_delete_id}">Delete</button></td>
                                 </tr>
                             </tbody>
 
@@ -174,11 +206,11 @@
                             <option value="19">Twitch_CreateClip</option>
                         </select>
                         <div>
-                            <button id="create_action_btn">Add</button>
+                            <button class="btn btn-success" id="create_action_btn">Add</button>
                         </div>
                         <hr>
                         <div>
-                            <button id="save_settings_btn">Save Settings</button>
+                            <button class="btn btn-success" id="save_settings_btn">Save Settings</button>
                         </div>
                         <br>
                         <article id="action_article">
@@ -201,9 +233,9 @@
                             <tbody id="condition_list_table">
                                 <tr>
                                     <td>{type}</td>
-                                    <td><button id="{condition_edit_id}">Edit</button></td>
-                                    <td><button id="{condition_clone_id}">Clone</button></td>
-                                    <td><button id="{condition_delete_id}">Delete</button></td>
+                                    <td><button class="btn btn-primary" id="{condition_edit_id}">Edit</button></td>
+                                    <td><button class="btn btn-default" id="{condition_clone_id}">Clone</button></td>
+                                    <td><button class="btn btn-danger" id="{condition_delete_id}">Delete</button></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -225,7 +257,7 @@
                             <option value="12">User_Permissions</option>
                         </select>
                         <div>
-                            <button id="create_condition_btn">Add</button>
+                            <button class="btn btn-success" id="create_condition_btn">Add</button>
                         </div>
                         <hr>
                         <article id="condition_article">
@@ -301,6 +333,8 @@
             var action_list_template = action_list_table.innerHTML;
             var condition_list_template = condition_list_table.innerHTML;
 
+            var edit_event = document.getElementById("edit_event");
+
             // ----
 
             var json = {};
@@ -318,13 +352,17 @@
                 json = gen.getJSON();
 
                 create_event_btn.onclick = function() {
-                    var index = gen.addEvent(parseInt(event_type_select.value));
-                    view.showEvents(json);
-
-                    view.showAction(index, -1);
-                    view.showCondition(index, -1);
-
-                    view.setCurrentEvent(index);
+                    try {
+                        var index = gen.addEvent(edit_event.value, parseInt(event_type_select.value));
+                        view.showEvents(json);
+    
+                        view.showAction(index, -1);
+                        view.showCondition(index, -1);
+    
+                        view.setCurrentEvent(index);
+                    } catch(e) {
+                        alert(e);
+                    }
                 };
 
                 download_btn.onclick = function() {

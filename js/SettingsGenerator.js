@@ -9,8 +9,8 @@ function SettingsGenerator() {
 
     var json = ef.create();
 
-    this.addEvent = function(event_type) {
-        json.Events.push(ef.createEvent(event_type));
+    this.addEvent = function(event_name, event_type) {
+        json.Events.push(ef.createEvent(event_name, event_type));
         return json.Events.length-1;
     };
 

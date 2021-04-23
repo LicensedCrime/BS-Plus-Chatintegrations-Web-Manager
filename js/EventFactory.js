@@ -25,7 +25,11 @@ function EventFactory() {
         return { Events: [] };
     };
     
-    this.createEvent = function(event_type) {
+    this.createEvent = function(name, event_type) {
+        if(!name) {
+            throw "The name of the event has to be specified.";
+        }
+
         var target_event = "undefined";
         for(var key in EVENT) {
             if(EVENT[key] == event_type) {
@@ -34,7 +38,7 @@ function EventFactory() {
             }
         }
     
-        var event = this.formatEvent(this.getEvent(target_event), event_type);
+        var event = this.formatEvent(this.getEvent(name, target_event), event_type);
     
         return {
             Type: "BeatSaberPlus.Modules.ChatIntegrations.Events." + target_event,
@@ -44,10 +48,10 @@ function EventFactory() {
         };
     };
     
-    this.getEvent = function(type) {
+    this.getEvent = function(name, type) {
         return {
             GUID: this.createGUID(),
-            Name: "Thanks message + emote bomb (Template)",
+            Name: name,
             Type: "BeatSaberPlus.Modules.ChatIntegrations.Events." + type,
             Enabled: true,
             UsageCount: 0,
