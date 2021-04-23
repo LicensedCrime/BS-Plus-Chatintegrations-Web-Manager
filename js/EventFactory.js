@@ -103,9 +103,9 @@ function EventFactory() {
     this.getLevelEnded = function(object) { return object; };
     this.getLevelStarted = function(object) { return object; };
     this.getVoiceAttackCommand = function(object) { 
-        object["CommandGUID"] = "";
+        object["CommandGUID"] = this.createGUID();
         object["CommandName"] = "";
-    
+
         return object;
     };
 }
