@@ -33,7 +33,7 @@ function SettingsGenerator() {
         return JSON.stringify(this.getJSON(), null, num_spaces);
     };
 
-    this.getJSON = function() {
-        return json;
-    };
+    this.getJSON = function() { return json; };
+
+    this.import = function(data) { json = JSON.parse(data); };
 }

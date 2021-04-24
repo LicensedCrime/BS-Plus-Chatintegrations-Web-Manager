@@ -383,6 +383,27 @@
                         alert(e);
                     }
                 };
+
+                document.ondragover = function(e) { e.preventDefault(); };
+                document.ondrop = function(e) {
+                    e.preventDefault();
+
+                    var file = e.dataTransfer.files[0];
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        var data = e.target.result;
+
+                        gen.import(data);
+                        json = gen.getJSON();
+
+                        view.showEvents(json);
+                        view.showAction(0, -1);
+                        view.showCondition(0, -1);
+                    };
+
+                    reader.readAsText(file);
+                };
             });
         </script>
     </body>
