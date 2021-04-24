@@ -8,8 +8,10 @@
 + place the json file in steamapps\common\Beat Saber\UserData\BeatSaberPlus\ChatIntegrations.json and you are good to go
 + make sure to have a backup, if you already have settings
 
+# Import file
++ drag and drop json file from steamapps\common\Beat Saber\UserData\BeatSaberPlus\
+
 # Todos
 + probably some refactoring of the index.html ... but who cares ...
 + generate select options from enums
 + globals ....
-+ add an option to work with existing settings
