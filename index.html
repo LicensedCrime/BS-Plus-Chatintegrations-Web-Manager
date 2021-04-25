@@ -7,40 +7,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-        <style>
-            hr {
-                border-top: 3px solid #ccc;
-            }
-
-            body {
-                background-color: rgb(48, 48, 48);
-                color: rgb(241, 241, 241);
-            }
-
-            button, select,
-            input.form-control,
-            .nav-tabs>li.active>a,
-            .nav-tabs>li:hover>a {
-                color:rgb(48, 48, 48);
-            }
-
-            .nav-tabs>li>a {
-                color: #fff;
-            }
-
-            select, input.form-control, .nav-tabs>li.active>a {
-                background-color: #f1f1f1;
-            }
-
-            input[disabled], .form-control[disabled] {
-                background-color: #757575;
-                color: #292929;
-            }
-
-            button {
-                margin-right: 5px;
-            }
-        </style>
+        <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
         <nav>
@@ -105,7 +72,7 @@
         
                     <hr>
         
-                    <table>
+                    <table class="table table-hover">
                         <thead id="event_list_head">
                             <tr>
                                 <th width="180">Type</th>
@@ -162,7 +129,7 @@
                     <section id="actions" class="tab-pane fade">
                         <h3>Actions</h3>
                         <hr>
-                        <table>
+                        <table class="table table-hover">
                             <thead id="actions_list_head">
                                 <tr>
                                     <th width="300">Type</th>
@@ -217,7 +184,7 @@
                     <section id="conditions" class="tab-pane fade">
                         <h3>Conditions</h3>
                         <hr>
-                        <table>
+                        <table class="table table-hover">
                             <thead id="conditions_list_head">
                                 <tr>
                                     <th width="300">Type</th>
@@ -280,8 +247,6 @@
         </script>
 
         <script>
-
-
             function download(filename, text) {
                 var element = document.createElement('a');
                 element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));

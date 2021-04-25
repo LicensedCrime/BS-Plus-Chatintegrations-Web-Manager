@@ -82,19 +82,48 @@ function ViewController() {
         return node.value;
     };
 
+    this.removeClass = function(node, class_name) {
+        var attr = node.getAttribute("class") || "";
+        node.setAttribute("class", attr.replace(class_name, "").trim());
+    };
+
+    this.removeChildClass = function(node_collection, class_name) {
+        var node;
+        for(var i = 0; i < node_collection.length; i++) {
+            node = node_collection[i];
+            this.removeClass(node, class_name);
+        }
+    };
+
+    this.toggleClass = function(node, class_name) {
+        var attr = node.getAttribute("class") || "";
+
+        if(attr.indexOf(class_name) >= 0) {
+            this.removeClass(node, class_name);
+            return;
+        }
+
+        var target = (attr + " " + class_name).trim();
+        node.setAttribute("class", target);
+    };
+
+    this.selectRow = function(node_collection, id) {
+        this.removeChildClass(node_collection, "active");
+        this.toggleClass(node_collection.item(id), "active");
+    };
+
     // ---
 
     this.onEventEdit = function(id) { 
-        current_event = id;
-        
         this.showEvents(json); /** H4LP ... globals ... */ 
-        this.showCondition(current_event, -1);
-        this.showAction(current_event, -1);
+        this.showCondition(id, -1);
+        this.showAction(id, -1);
+
+        this.setCurrentEvent(id);
     };
     this.onActionEdit = function(id) { this.showAction(current_event, id); };
     this.onConditionEdit = function(id) { this.showCondition(current_event, id); };
 
-    
     this.onEventDelete = function(id) {
         this.removeChild(event_list_table, id);
         json.Events.splice(id, 1);
@@ -119,13 +148,28 @@ function ViewController() {
     this.onActionClone = function(id) {};
     this.onConditionClone = function(id) {};
 
-    this.setCurrentEvent = function(val) { current_event = val; };
+    this.setCurrentEvent = function(val) {
+        current_event = val;
+        if(current_event >= 0) {
+            this.selectRow(event_list_table.children, current_event);
+        }
+    };
     this.getCurrentEvent = function() { return current_event; };
 
-    this.setCurrentAction = function(val) { current_action = val; };
+    this.setCurrentAction = function(val) {
+        current_action = val;
+        if(current_action >= 0) {
+            this.selectRow(action_list_table.children, current_action);
+        }
+    };
     this.getCurrentAction = function() { return current_action; };
 
-    this.setCurrentCondition = function(val) { current_condition = val; };
+    this.setCurrentCondition = function(val) {
+        current_condition = val;
+        if(current_condition >= 0) {
+            this.selectRow(condition_list_table.children, current_condition);
+        }
+    };
     this.getCurrentCondition = function() { return current_condition; };
 
 
@@ -185,7 +229,6 @@ function ViewController() {
             return;
         }
 
-        current_action = action_index;
         var action_json = json.Events[event_index].Actions[action_index];
 
         var action_html = '<form>';
@@ -197,6 +240,8 @@ function ViewController() {
         }
         action_html += '</form>';
         action_article.insertAdjacentHTML("beforeend", action_html);
+
+        this.setCurrentAction(action_index);
     };
 
     this.showActions = function(actions) {
@@ -232,7 +277,6 @@ function ViewController() {
             return;
         }
 
-        current_condition = condition_index;
         var condition_json = json.Events[event_index].Conditions[condition_index];
 
         var condition_html = '<form>';
@@ -244,6 +288,8 @@ function ViewController() {
         }
         condition_html += '</form>';
         condition_article.insertAdjacentHTML("beforeend", condition_html);
+
+        this.setCurrentCondition(condition_index);
     };
 
     this.showConditions = function(conditions) {
