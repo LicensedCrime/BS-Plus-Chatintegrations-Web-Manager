@@ -1,0 +1,54 @@
+hr {
+    border-top: 3px solid #ccc;
+}
+
+body {
+    background-color: rgb(48, 48, 48);
+    color: rgb(241, 241, 241);
+}
+
+button, select,
+input.form-control,
+.nav-tabs>li.active>a,
+.nav-tabs>li:hover>a {
+    color:rgb(48, 48, 48);
+}
+
+.nav-tabs>li>a {
+    color: #fff;
+}
+
+select, input.form-control, .nav-tabs>li.active>a {
+    background-color: #f1f1f1;
+}
+
+input[disabled], .form-control[disabled] {
+    background-color: #757575;
+    color: #292929;
+}
+
+button {
+    margin-right: 5px;
+}
+
+/** --- **/
+
+.table>tbody>tr.active>td, 
+.table>tbody>tr.active>th, 
+.table>tbody>tr>td.active, 
+.table>tbody>tr>th.active, 
+.table>tfoot>tr.active>td, 
+.table>tfoot>tr.active>th, 
+.table>tfoot>tr>td.active, 
+.table>tfoot>tr>th.active, 
+.table>thead>tr.active>td, 
+.table>thead>tr.active>th, 
+.table>thead>tr>td.active, 
+.table>thead>tr>th.active,
+.table-hover>tbody>tr:hover {
+    background-color: #404040 !important;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    vertical-align: middle;
+}
