@@ -11,6 +11,18 @@
 # Import file
 + drag and drop json file from **_steamapps/common/Beat Saber/UserData/BeatSaberPlus/_**
 
+# Events supported
++ All
++ ChatBits
++ ChatCommand
++ ChatFollow
++ ChatPointsReward
++ ChatSubscription
++ Dummy
++ LevelEnded
++ LevelStarted
++ VoiceAttackCommand
+
 # Triggers supported
 + ChatPointsReward 
 + VoiceAttackCommand
