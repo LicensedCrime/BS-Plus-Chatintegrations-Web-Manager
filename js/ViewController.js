@@ -1,4 +1,4 @@
-function ViewController() {
+function ViewController(settings_generator) {
     var trigger_article = document.getElementById("trigger_article");
     var condition_article = document.getElementById("condition_article");
     var action_article = document.getElementById("action_article");
@@ -53,7 +53,7 @@ function ViewController() {
 
         switch(tab_type) {
             case TAB.TRIGGER:
-                // ~~~
+                struct = json.Events[current_event].Event;
                 break;
             case TAB.ACTIONS:
                 struct = json.Events[current_event].Actions[current_action];
@@ -63,6 +63,7 @@ function ViewController() {
                 break;
         }
 
+        // fetch all inputs inside of the article and assign the values to the json struct
         var input_collection = node.querySelectorAll('input');
         var input_node, input_value;
         for(var i = 0; i < input_collection.length; i++) {
@@ -118,6 +119,7 @@ function ViewController() {
         this.showEvents(json); /** H4LP ... globals ... */ 
         this.showCondition(id, -1);
         this.showAction(id, -1);
+        this.showTrigger(id);
 
         this.setCurrentEvent(id);
     };
@@ -187,7 +189,12 @@ function ViewController() {
 
     this.getInputMarkup = function(type, attribute, value) {
         var add_attribute = this.getAdditionalAttributes(attribute);
+        var template = '<div class="form-group">';
+            template += '<label for="edit_action_' + type + '_' + attribute + '">' + attribute + '</label>';
+            template += "{input_markup}";
+            template += '</div>';
 
+        var markup = "";
         switch(attribute) {
             case "Enabled":
             case "SendChatMessage":
@@ -201,15 +208,25 @@ function ViewController() {
             case "Replay":
             case "PerUser":
             case "NotifyUser":
-                return '<br><input type="checkbox" data-toggle="toggle" id="edit_' + type + '_' + attribute + '" ' + (value ? "checked" : "") + ' ' + add_attribute + '>';
+            case "RequireInput":
+                markup = '<br><input type="checkbox" data-toggle="toggle" id="edit_' + type + '_' + attribute + '" ' + (value ? "checked" : "") + ' ' + add_attribute + '>';
+                break;
             case "ValueType":
             case "UserValue":
             case "Min":
             case "Max":
-                return '<input type="number" class="form-control" id="edit_' + type + '_' + attribute + '" value="' + value + '" ' + add_attribute + '>';
+            case "Cost":
+            case "MaxPerStream":
+            case "MaxPerUserPerStream":
+            case "Cooldown":
+                markup = '<input type="number" class="form-control" id="edit_' + type + '_' + attribute + '" value="' + value + '" ' + add_attribute + '>';
+                break;
+            default:
+                markup = '<input type="text" class="form-control" id="edit_' + type + '_' + attribute + '" value="' + value + '" ' + add_attribute + '>';
+                break;
         }
 
-        return '<input type="text" class="form-control" id="edit_' + type + '_' + attribute + '" value="' + value + '" ' + add_attribute + '>'
+        return template.replace("{input_markup}", markup);
     };
 
     this.getAdditionalAttributes = function(attribute) {
@@ -233,10 +250,7 @@ function ViewController() {
 
         var action_html = '<form>';
         for(var attr in action_json) {
-            action_html += '<div class="form-group">';
-            action_html += '<label for="edit_action_' + attr + '">' + attr + '</label>';
             action_html += this.getInputMarkup("action", attr, action_json[attr]);
-            action_html += '</div>';
         }
         action_html += '</form>';
         action_article.insertAdjacentHTML("beforeend", action_html);
@@ -281,10 +295,7 @@ function ViewController() {
 
         var condition_html = '<form>';
         for(var attr in condition_json) {
-            condition_html += '<div class="form-group">';
-            condition_html += '<label for="edit_condition_' + attr + '">' + attr + '</label>';
             condition_html += this.getInputMarkup("condition", attr, condition_json[attr]);
-            condition_html += '</div>';
         }
         condition_html += '</form>';
         condition_article.insertAdjacentHTML("beforeend", condition_html);
@@ -315,6 +326,25 @@ function ViewController() {
             document.getElementById("condition_clone_" + i).onclick = function() { self.onConditionClone(parseInt(this.id.replace(/([^\d]+)/g, ""))); };
             document.getElementById("condition_delete_" + i).onclick = function() { self.onConditionDelete(parseInt(this.id.replace(/([^\d]+)/g, ""))); };
         }
+    };
+
+    this.showTrigger = function(event_index) {
+        this.removeChildren(trigger_article);
+        
+        var event_keys = settings_generator.getTriggerKeys(event_index);
+        if(event_keys.length < 1) {
+            return;
+        }
+
+        var trigger_html = "<form>";
+        var key, event = json.Events[event_index].Event;
+        for(var i = 0; i < event_keys.length; i++) {
+            key = event_keys[i];
+            trigger_html += this.getInputMarkup("trigger", key, event[key]);
+        }
+        trigger_html += "</form>";
+
+        trigger_article.insertAdjacentHTML("beforeend", trigger_html);
     };
 
     this.showEvents = function(json) {

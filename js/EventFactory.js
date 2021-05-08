@@ -112,4 +112,24 @@ function EventFactory() {
 
         return object;
     };
+
+    this.getTriggerKeys = function(event_type) {
+        switch(EVENT[event_type]) {
+            case EVENT.ChatPointsReward:
+                return [
+                    "RewardID",
+                    "Title",
+                    "Prompt",
+                    "Cost",
+                    "RequireInput",
+                    "MaxPerStream",
+                    "MaxPerUserPerStream",
+                    "Cooldown"
+                ];
+            case EVENT.VoiceAttackCommand:
+                return ["CommandName"];
+        }
+
+        return [];
+    };
 }

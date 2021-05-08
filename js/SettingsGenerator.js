@@ -28,6 +28,11 @@ function SettingsGenerator() {
         return json.Events[index].Conditions.length-1;
     };
 
+    this.getTriggerKeys = function(event_index) {
+        var event_type = json.Events[event_index].Type.match(/([\w]+)$/g)[0];
+        return ef.getTriggerKeys(event_type);
+    };
+
     this.getJSONString = function() {
         var num_spaces = 4;
         return JSON.stringify(this.getJSON(), null, num_spaces);
