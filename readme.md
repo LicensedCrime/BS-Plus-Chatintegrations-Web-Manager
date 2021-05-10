@@ -11,6 +11,9 @@
 # Import file
 + drag and drop json file from **_steamapps/common/Beat Saber/UserData/BeatSaberPlus/_**
 
+# Export file
++ Big download button 😏
+
 # Events supported
 + All
 + ChatBits
