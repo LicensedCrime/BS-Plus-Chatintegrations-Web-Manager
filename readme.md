@@ -8,6 +8,10 @@
 + place the json file in **_steamapps/common/Beat Saber/UserData/BeatSaberPlus/ChatIntegrations.json_** and you are good to go
 + make sure to have a backup, if you already have settings
 
+# Save settings
++ After editing triggers/actions/conditions, make sure to hit "Save Settings" before hitting the next edit button
++ Deletion/Creation will be saved instantly
+
 # Import file
 + drag and drop json file from **_steamapps/common/Beat Saber/UserData/BeatSaberPlus/_**
 
