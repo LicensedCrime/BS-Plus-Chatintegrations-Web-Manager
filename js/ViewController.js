@@ -145,6 +145,60 @@ function ViewController(settings_generator) {
 
         this.showCondition(current_event, -1);
     };
+
+    this.onActionArrowUp = function(id) {
+        var next_id = id - 1;
+        if(next_id < 0) {
+            return;
+        }
+
+        this.onSaveButton();
+        this.swapItems(json.Events[current_event].Actions, id, next_id);
+
+        current_action = next_id;
+        this.showActions(json.Events[current_event].Actions);
+        this.showAction(current_event, current_action);
+    };
+    this.onActionArrowDown = function(id) {
+        var next_id = id + 1;
+        if(next_id > json.Events[current_event].Actions.length - 1) {
+            return;
+        }
+
+        this.onSaveButton();
+        this.swapItems(json.Events[current_event].Actions, id, next_id);
+
+        current_action = next_id;
+        this.showActions(json.Events[current_event].Actions);
+        this.showAction(current_event, current_action);
+    };
+
+    this.onConditionArrowUp = function(id) {
+        var next_id = id - 1;
+        if(next_id < 0) {
+            return;
+        }
+
+        this.onSaveButton();
+        this.swapItems(json.Events[current_event].Conditions, id, next_id);
+
+        current_condition = next_id;
+        this.showConditions(json.Events[current_event].Conditions);
+        this.showCondition(current_event, current_condition);
+    };
+    this.onConditionArrowDown = function(id) {
+        var next_id = id + 1;
+        if(next_id > json.Events[current_event].Conditions.length - 1) {
+            return;
+        }
+
+        this.onSaveButton();
+        this.swapItems(json.Events[current_event].Conditions, id, next_id);
+
+        current_condition = next_id;
+        this.showConditions(json.Events[current_event].Conditions);
+        this.showCondition(current_event, current_condition);
+    };
     
     this.onEventClone = function(id) {};
     this.onActionClone = function(id) {};
@@ -176,6 +230,12 @@ function ViewController(settings_generator) {
 
 
     // ----
+
+    this.swapItems = function(node, id, next_id) {
+        var tmp = node[id];
+        node[id] = node[next_id];
+        node[next_id] = tmp;
+    };
 
     this.removeChildren = function(node) {
         while(node.firstChild) {
@@ -265,7 +325,9 @@ function ViewController(settings_generator) {
                 .replace("{type}", actions[i].Type.match(/([\w]+)$/g)[0])
                 .replace("{action_edit_id}", "action_edit_" + i)
                 .replace("{action_clone_id}", "action_clone_" + i)
-                .replace("{action_delete_id}", "action_delete_" + i);
+                .replace("{action_delete_id}", "action_delete_" + i)
+                .replace("{action_arrow_up_id}", "action_arrow_up_" + i)
+                .replace("{action_arrow_down_id}", "action_arrow_down_" + i);
         }
 
         this.removeChildren(action_list_table);
@@ -280,6 +342,9 @@ function ViewController(settings_generator) {
             document.getElementById("action_edit_" + i).onclick = function() { self.onActionEdit(parseInt(this.id.replace(/([^\d]+)/g, ""))); };
             document.getElementById("action_clone_" + i).onclick = function() { self.onActionClone(parseInt(this.id.replace(/([^\d]+)/g, ""))); };
             document.getElementById("action_delete_" + i).onclick = function() { self.onActionDelete(parseInt(this.id.replace(/([^\d]+)/g, ""))); };
+
+            document.getElementById("action_arrow_up_" + i).onclick = function() { self.onActionArrowUp(parseInt(this.id.replace(/([^\d]+)/g, ""))); };
+            document.getElementById("action_arrow_down_" + i).onclick = function() { self.onActionArrowDown(parseInt(this.id.replace(/([^\d]+)/g, ""))); };
         }
     };
 
@@ -310,7 +375,9 @@ function ViewController(settings_generator) {
                 .replace("{type}", conditions[i].Type.match(/([\w]+)$/g)[0])
                 .replace("{condition_edit_id}", "condition_edit_" + i)
                 .replace("{condition_clone_id}", "condition_clone_" + i)
-                .replace("{condition_delete_id}", "condition_delete_" + i);
+                .replace("{condition_delete_id}", "condition_delete_" + i)
+                .replace("{condition_arrow_up_id}", "condition_arrow_up_" + i)
+                .replace("{condition_arrow_down_id}", "condition_arrow_down_" + i);
         }
 
         this.removeChildren(condition_list_table);
@@ -325,6 +392,9 @@ function ViewController(settings_generator) {
             document.getElementById("condition_edit_" + i).onclick = function() { self.onConditionEdit(parseInt(this.id.replace(/([^\d]+)/g, ""))); };
             document.getElementById("condition_clone_" + i).onclick = function() { self.onConditionClone(parseInt(this.id.replace(/([^\d]+)/g, ""))); };
             document.getElementById("condition_delete_" + i).onclick = function() { self.onConditionDelete(parseInt(this.id.replace(/([^\d]+)/g, ""))); };
+
+            document.getElementById("condition_arrow_up_" + i).onclick = function() { self.onConditionArrowUp(parseInt(this.id.replace(/([^\d]+)/g, ""))); };
+            document.getElementById("condition_arrow_down_" + i).onclick = function() { self.onConditionArrowDown(parseInt(this.id.replace(/([^\d]+)/g, ""))); };
         }
     };
 
